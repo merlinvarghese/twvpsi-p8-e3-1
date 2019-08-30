@@ -1,25 +1,27 @@
 package com.tw.vapasi;
+
+import java.util.FormatFlagsConversionMismatchException;
+import java.util.HashMap;
+import java.util.Map;
+
 class UnitMeasurement {
 
 
     private static final int HUNDRED = 100;
     private static final int THOUSAND = 1000;
-    private static final int TENTHOUSAND = 10000;
+    private static final int HUNDREDTHOUSAND = 100000;
     private static final int ONE = 1;
 
     int value;
     String unit;
+
+
 
     UnitMeasurement(int value, String unit) {
         this.value = value;
         this.unit = unit;
     }
 
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
 
     Boolean convertFromMeter(UnitMeasurement obj) {
         if (this.unit.equals("cm") && this.value == HUNDRED && obj.value == ONE)
@@ -34,7 +36,7 @@ class UnitMeasurement {
     Boolean convertFromKilometer(UnitMeasurement obj) {
         if (this.unit.equals("m")  && this.value == THOUSAND && obj.value == ONE)
             return true;
-        if (this.unit.equals("cm")  && this.value == TENTHOUSAND && obj.value == ONE)
+        if (this.unit.equals("cm")  && this.value == HUNDREDTHOUSAND && obj.value == ONE)
             return true;
         return false;
     }
@@ -80,4 +82,9 @@ class UnitMeasurement {
 
 
     }
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
 }
