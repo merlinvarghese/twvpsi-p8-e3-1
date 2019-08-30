@@ -1,13 +1,8 @@
 package com.tw.vapasi;
-
-import java.lang.invoke.SwitchPoint;
-import java.util.Objects;
-
 class UnitMeasurement {
 
 
     private static final int HUNDRED = 100;
-
     private static final int THOUSAND = 1000;
     private static final int TENTHOUSAND = 10000;
     private static final int ONE = 1;
@@ -15,10 +10,9 @@ class UnitMeasurement {
     int value;
     String unit;
 
-    UnitMeasurement(int value,String unit)
-    {
-        this.value=value;
-        this.unit=unit;
+    UnitMeasurement(int value, String unit) {
+        this.value = value;
+        this.unit = unit;
     }
 
 
@@ -27,31 +21,29 @@ class UnitMeasurement {
         return super.hashCode();
     }
 
-    Boolean convertFromMeter(UnitMeasurement obj)
-    {
-        if(this.unit=="cm" && this.value== HUNDRED && obj.value==ONE)
+    Boolean convertFromMeter(UnitMeasurement obj) {
+        if (this.unit.equals("cm") && this.value == HUNDRED && obj.value == ONE)
             return true;
 
-        if(this.unit=="km" && this.value==THOUSAND && obj.value==ONE)
+        if (this.unit.equals("km") && this.value == THOUSAND && obj.value == ONE)
             return true;
 
         return false;
     }
 
-    Boolean convertFromKilometer(UnitMeasurement obj)
-    {
-        if(this.unit=="m" && this.value==THOUSAND && obj.value==ONE)
+    Boolean convertFromKilometer(UnitMeasurement obj) {
+        if (this.unit.equals("m")  && this.value == THOUSAND && obj.value == ONE)
             return true;
-        if(this.unit=="cm" && this.value==TENTHOUSAND && obj.value==ONE)
+        if (this.unit.equals("cm")  && this.value == TENTHOUSAND && obj.value == ONE)
             return true;
         return false;
     }
-    Boolean convertFromCm(UnitMeasurement obj)
-    {
-        if(this.unit=="m" && this.value==ONE && obj.value==ONE)
+
+    Boolean convertFromCm(UnitMeasurement obj) {
+        if (this.unit.equals("m") && this.value == ONE && obj.value == ONE)
             return true;
 
-        if(this.unit=="km" && this.value==ONE && obj.value==ONE)
+        if (this.unit.equals("km") && this.value == ONE && obj.value == ONE)
             return true;
         return false;
     }
@@ -62,10 +54,11 @@ class UnitMeasurement {
             case "m":
                 return convertFromMeter(obj);
             case "km":
-               return  convertFromKilometer(obj);
+                return convertFromKilometer(obj);
             case "cm":
-                return  convertFromCm(obj);
-            default: return true;
+                return convertFromCm(obj);
+            default:
+                return true;
         }
     }
 
@@ -83,10 +76,7 @@ class UnitMeasurement {
             return true;
         if (obj == null || this.getClass() != obj.getClass())
             return false;
-        return compare((UnitMeasurement)obj);
-
-
-
+        return compare((UnitMeasurement) obj);
 
 
     }
