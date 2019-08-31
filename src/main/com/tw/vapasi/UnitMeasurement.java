@@ -1,90 +1,65 @@
 package com.tw.vapasi;
 
-import java.util.FormatFlagsConversionMismatchException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
 class UnitMeasurement {
 
 
-    private static final int HUNDRED = 100;
-    private static final int THOUSAND = 1000;
-    private static final int HUNDREDTHOUSAND = 100000;
-    private static final int ONE = 1;
-
-    int value;
-    String unit;
+    private static final int M_To_CM = 100;
+    private static final int KM_TO_CM = 100000;
 
 
+    private final double value;
+    private final Units unit;
 
-    UnitMeasurement(int value, String unit) {
+    public enum Units {
+        KM,
+        CM,
+        M
+    }
+
+    private UnitMeasurement(double value, Units unit) {
         this.value = value;
         this.unit = unit;
     }
 
-
-    Boolean convertFromMeter(UnitMeasurement obj) {
-        if (this.unit.equals("cm") && this.value == HUNDRED && obj.value == ONE)
-            return true;
-
-        if (this.unit.equals("km") && this.value == THOUSAND && obj.value == ONE)
-            return true;
-
-        return false;
+    static UnitMeasurement cms(double quantity) {
+        return new UnitMeasurement(quantity, Units.CM);
     }
 
-    Boolean convertFromKilometer(UnitMeasurement obj) {
-        if (this.unit.equals("m")  && this.value == THOUSAND && obj.value == ONE)
-            return true;
-        if (this.unit.equals("cm")  && this.value == HUNDREDTHOUSAND && obj.value == ONE)
-            return true;
-        return false;
+    static UnitMeasurement kms(double quantity) {
+        return new UnitMeasurement(quantity, Units.KM);
     }
 
-    Boolean convertFromCm(UnitMeasurement obj) {
-        if (this.unit.equals("m") && this.value == ONE && obj.value == ONE)
-            return true;
-
-        if (this.unit.equals("km") && this.value == ONE && obj.value == ONE)
-            return true;
-        return false;
+    static UnitMeasurement ms(double quantity) {
+        return new UnitMeasurement(quantity, Units.M);
     }
 
-
-    boolean compare(UnitMeasurement obj) {
-        switch (obj.unit) {
-            case "m":
-                return convertFromMeter(obj);
-            case "km":
-                return convertFromKilometer(obj);
-            case "cm":
-                return convertFromCm(obj);
+    private double convertToCM() {
+        switch (this.unit) {
+            case M:
+                return this.value * M_To_CM;
+            case KM:
+                return this.value * KM_TO_CM;
             default:
-                return true;
+                return this.value;
         }
-    }
 
-    private boolean FromMeter(String cm, int i) {
-        if (this.unit == cm)
-            if (i == 1)
-                return true;
-        return false;
     }
-
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(Object otherObj) {
+        if (this == otherObj)
             return true;
-        if (obj == null || this.getClass() != obj.getClass())
+        if (otherObj == null || this.getClass() != otherObj.getClass())
             return false;
-        return compare((UnitMeasurement) obj);
-
+        return this.convertToCM() == ((UnitMeasurement) otherObj).convertToCM();
 
     }
+
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hashCode(this.value);
     }
 
 }
