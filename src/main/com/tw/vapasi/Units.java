@@ -10,13 +10,8 @@ public enum Units {
         this.conversionFactor = conversionFactor;
     }
 
-
-//    private double getConversionFactor() {
-//        return conversionFactor;
-//    }
     double convertToBase(double value) {
         return value * this.conversionFactor;
     }
-
 }
 
