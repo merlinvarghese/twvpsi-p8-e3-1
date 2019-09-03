@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import static com.tw.vapasi.Measurement.cms;
 import static com.tw.vapasi.Measurement.ms;
 import static com.tw.vapasi.Measurement.kms;
+import static com.tw.vapasi.Measurement.gm;
+import static com.tw.vapasi.Measurement.kg;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MeasurementTest {
@@ -62,6 +65,19 @@ class MeasurementTest {
         @Test
         void expectFalseForKM_To_CM() {
             assertFalse(kms(100).equals(cms(10000)));
+        }
+    }
+
+    @Nested
+    class WeightTest {
+        @Test
+        void expectKG_To_CMAreNotEqual() {
+            assertFalse(kg(1).equals(cms(1)));
+        }
+
+        @Test
+        void expectKG_To_1000GMAreEqual() {
+            assertTrue(kg(1).equals(gm(1000)));
         }
     }
 }
