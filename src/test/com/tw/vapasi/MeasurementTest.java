@@ -1,18 +1,12 @@
 package com.tw.vapasi;
 
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import static com.tw.vapasi.Measurement.cms;
-import static com.tw.vapasi.Measurement.ms;
-import static com.tw.vapasi.Measurement.kms;
-import static com.tw.vapasi.Measurement.gm;
-import static com.tw.vapasi.Measurement.kg;
-
+import static com.tw.vapasi.Measurement.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MeasurementTest {
-    @Nested
+        @Nested
     class BaseEqualsTest {
         @Test
         void expect100CmsAnd100CmsAreEqual() {
@@ -80,4 +74,40 @@ class MeasurementTest {
             assertTrue(kg(1).equals(gm(1000)));
         }
     }
+
+    @Nested
+    class LengthMeasurementOperations {
+        @Test
+        void expect300CMAsSumOf100CM_2M() throws Exception {
+            assertEquals(cms(300), cms(100).add(ms(2)));
+        }
+        @Test
+        void expect2pt2KGAsSumOf2KG_200GM() throws CannotAddException {
+            assertEquals(kg(2.2), kg(2.0).add(gm(200.0)));
+        }
+        @Test
+        void expectAnExceptionWhenAddingDifferentUnitType() {
+            Measurement operand1 = Measurement.cms(100);
+            Measurement operand2 = Measurement.gm(100);
+            try {
+                operand1.add(operand2);
+                Assertions.fail("It has thrown an Exception");
+            } catch (CannotAddException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    @Nested
+    class TemperatureMeasurementOperations {
+        @Test
+        void expect0DegCEquals32F() throws Exception {
+            assertTrue(c(0).equals(f(32)));
+        }
+
+        @Test
+        void expect0DegCEqualsMinus273K() throws CannotAddException {
+            assertTrue(c(0).equals(k(273)));
+        }
+    }
 }
+
